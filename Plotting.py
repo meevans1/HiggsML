@@ -3,6 +3,21 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import ks_2samp
 
+def plot_hist(sig,bkg,xvar='x'):
+    n_bins = 40
+    
+    d_min = min(sig[xvar].min(),bkg[xvar].min())
+    d_max = max(sig[xvar].max(),bkg[xvar].max())
+    if d_min<-998: d_min = 0
+    sig_tr,bins,_ = plt.hist(bkg[xvar],bins=n_bins,range=(d_min,d_max), color='tab:orange', label='bkg',alpha=0.6, density=True)
+    bkg_tr,_,_ = plt.hist(sig[xvar],bins=n_bins,range=(d_min,d_max), color='tab:blue', label='sig', alpha=0.6, density=True)
+
+    plt.xlabel(xvar)
+    
+    plt.legend()
+    plt.show()
+    return
+
 def plot_scatter(sig,bkg,xvar='x',yvar='y'):
     plt.plot(sig[xvar],sig[yvar], 'o', c='tab:blue', label='sig', alpha=0.5, markeredgecolor='k')
     plt.plot(bkg[xvar],bkg[yvar], 'o', c='tab:orange', label='bkg', alpha=0.5, markeredgecolor='k')
